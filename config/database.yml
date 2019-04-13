@@ -1,4 +1,4 @@
-<% project_name = 'rails-api-template' %>
+<% project_name = 'in-the-cards' %>
 
 default: &default
   adapter: postgresql
