@@ -238,6 +238,38 @@ Response:
 HTTP/1.1 204 No Content
 ```
 
+#### GET /draw
+
+Request:
+
+```sh
+curl "http://localhost:4741/draw" \
+  --include \
+  --request GET \
+
+echo
+```
+
+```sh
+sh curl-scripts/card/draw-cards.sh
+```
+
+Response:
+
+```md
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+ETag: W/"a35846c41f9e7b6e32c537073a0089be"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 4e94deac-7cab-4973-9e2a-657bba0d4e02
+X-Runtime: 0.006389
+Vary: Origin
+Transfer-Encoding: chunked
+
+{"cards":[{"id":19,"name":"Moon","mean_reverse":"Confusion, fear, misinterpretation","mean_up":"Unconscious, illusions, intuition","icon":"🌝"},{"id":15,"name":"Temperance","mean_reverse":"Extreme, Excess, imbalanced","mean_up":"Middle path, patience, finding meaning","icon":"💁"},{"id":21,"name":"Judgement","mean_reverse":"No self awareness, doubt, self loathing","mean_up":"reflection, reckoning, awakening","icon":"🌀"}]}
+```
+
+
 ### Reset Database without dropping
 
 This is not a task developers should run often, but it is sometimes necessary.
