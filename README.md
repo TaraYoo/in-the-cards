@@ -100,7 +100,7 @@ tests in RSpec to test your API.
 | POST   | `/sign-up`             | `users#signup`    |
 | POST   | `/sign-in`             | `users#signin`    |
 | PATCH  | `/change-password`     | `users#changepw`  |
-| DELETE | `/sign-out`        | `users#signout`   |
+| DELETE | `/sign-out`            | `users#signout`   |
 
 ### Card
 
