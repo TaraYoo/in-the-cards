@@ -42,7 +42,14 @@ class CardsController < ApplicationController
 
   # custom GET /draw - draw three cards either up or reversed
   def draw
-    render json: { 'card': 'drawn' }
+    @card_ids = Card.ids
+    @three_chosen_ids = @card_ids.sample(3)
+    @drawn_cards = []
+    @three_chosen_ids.each do |id|
+      @drawn_cards.push(Card.find(id))
+    end
+
+    render json: @drawn_cards
   end
 
   private
