@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CardsController < ApplicationController
-  before_action :set_card, only: [:show, :update, :destroy]
+  before_action :set_card, only: %i[show update destroy]
 
   # GET /cards
   def index
@@ -36,6 +38,11 @@ class CardsController < ApplicationController
   # DELETE /cards/1
   def destroy
     @card.destroy
+  end
+
+  # custom GET /draw - draw three cards either up or reversed
+  def draw
+    render json: { 'card': 'drawn' }
   end
 
   private
