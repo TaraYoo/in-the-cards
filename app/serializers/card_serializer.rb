@@ -1,3 +1,6 @@
 class CardSerializer < ActiveModel::Serializer
-  attributes :id, :name, :mean_reverse, :mean_up, :icon
+  attributes :id, :name, :icon
+  attribute :meaning do
+    rand < 0.5 ? "#{object.mean_up}" : "#{object.mean_reverse}"
+  end
 end
