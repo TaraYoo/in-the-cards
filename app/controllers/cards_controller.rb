@@ -49,10 +49,6 @@ class CardsController < ApplicationController
       @drawn_cards.push(Card.find(id))
     end
 
-    @deck = Deck.create
-    @deck.cards = @drawn_cards
-    @deck.save
-
     render json: @drawn_cards
   end
 
