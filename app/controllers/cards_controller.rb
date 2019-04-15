@@ -40,7 +40,7 @@ class CardsController < ApplicationController
     @card.destroy
   end
 
-  # custom GET /draw - draw three cards either up or reversed
+  # custom GET /draw - draw three cards either up or reversed. Pass to a deck
   def draw
     @card_ids = Card.ids
     @three_chosen_ids = @card_ids.sample(3)
@@ -48,6 +48,10 @@ class CardsController < ApplicationController
     @three_chosen_ids.each do |id|
       @drawn_cards.push(Card.find(id))
     end
+
+    @deck = Deck.create
+    @deck.cards = @drawn_cards
+    @deck.save
 
     render json: @drawn_cards
   end
