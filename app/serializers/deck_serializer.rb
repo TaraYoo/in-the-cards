@@ -1,6 +1,8 @@
 class DeckSerializer < ActiveModel::Serializer
   attributes :id, :question, :accuracy
 
+  # 2019-04-15T18:04:50.890Z
+
   attribute :formatted_cards do
     formatted = []
     object.readings.each do |reading|
@@ -19,5 +21,13 @@ class DeckSerializer < ActiveModel::Serializer
       end
     end
     formatted
+  end
+
+  attribute :reading_date do
+    object.created_at.strftime('%F')
+  end
+
+  attribute :updated_on do
+    object.updated_at.strftime('%F')
   end
 end
