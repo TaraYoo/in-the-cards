@@ -17,7 +17,20 @@ class DecksController < ProtectedController
   def create
     @deck = current_user.decks.build(deck_params)
 
+    # User signed in
+    # User draws cards - gets 3 card ids
+    # 3 card ids are stored in the front end
+    # Could move the draw function over to decks controller
+
+    puts @drawn_cards
+
     if @deck.save
+      @card_ids = Card.ids
+      @three_chosen_ids = @card_ids.sample(3)
+      @drawn_cards = []
+      @three_chosen_ids.each do |id|
+        Reading.create(deck_id: @deck.id, card_id: id)
+      end
       render json: @deck, status: :created, location: @deck
     else
       render json: @deck.errors, status: :unprocessable_entity
