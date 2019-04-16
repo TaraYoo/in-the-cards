@@ -3,7 +3,7 @@ class DecksController < ProtectedController
 
   # GET /decks
   def index
-    @decks = current_user.decks
+    @decks = current_user.decks.order('updated_at DESC', 'created_at DESC')
 
     render json: @decks
   end
