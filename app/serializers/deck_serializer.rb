@@ -15,7 +15,8 @@ class DeckSerializer < ActiveModel::Serializer
       formatted.each do |format_object|
         if card.id == format_object[:id]
           format_object[:name] = card.name
-          format_object[:meaning] = format_object[:up] ? card[:mean_up] : card[:mean_reverse]
+          format_object[:mean_up] = card.mean_up
+          format_object[:mean_reverse] = card.mean_reverse
           format_object[:icon] = card.icon
         end
       end
