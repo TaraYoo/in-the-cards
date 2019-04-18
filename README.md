@@ -2,9 +2,7 @@
 
 This is the back-end API for In the cards - a simple major arcana tarot card
 reader. Please see the front end repository [here](https://github.com/TaraYoo/in-the-cards-client)
-The front end is deployed [here](https://tarayoo.github.io/in-the-cards-client/#/).
-
-The back-end api is deployed [here](https://pure-lowlands-31271.herokuapp.com/cards)
+The front end is deployed [here](https://tarayoo.github.io/in-the-cards-client/#/)
 
 ## Dependencies (technologies used)
 
@@ -42,31 +40,29 @@ Update deck history to indicate reading's accuracy
 ##### I want to delete previous readings
 1. /deck/:id - 'DELETE' delete a particular deck
 
+## Setup and installation
 
 ### Setup Environment:
-1.  Install dependencies with `bundle install`.
-1.  `git add` and `git commit` your changes.
+1.  `bundle install`.
+1.  `git add` and `git commit` changes.
 1.  Create a `.env` for sensitive settings (`touch .env`).
 1.  Generate new `development` and `test` secrets (`bundle exec rails secret`).
-1.  Store them in `.env` with keys `SECRET_KEY_BASE_<DEVELOPMENT|TEST>`
-    respectively.
-1.  In order to make requests to your deployed API, you will need to set
-    `SECRET_KEY_BASE` in the environment of the production API (for example, using `heroku config:set` or the Heroku dashboard).
-1.  In order to make requests from your deployed client application, you will
-    need to set `CLIENT_ORIGIN` in the environment of the production API (for example, `heroku config:set CLIENT_ORIGIN=https://<github-username>.github.io`).
-    See more about deploying to heroku [rails-heroku-setup-guide](https://git.generalassemb.ly/ga-wdi-boston/rails-heroku-setup-guide)
+1.  Store the below in `.env`:
+ - `SECRET_KEY_BASE_DEVELOPMENT=replace_with_the_first_secret_number_that_got_generated`
+ `SECRET_KEY_BASE_TEST=replace_with_the_second_secret_number_that_got_generated`
+1.  You will need to set separate secret keys if you want to deploy.
 
-### Setup your database:
-    - bin/rails db:drop (if it already exists)
+### Setup database:
+    - bin/rails db:drop
     - bin/rails db:create
     - bin/rails db:migrate
     - bin/rails db:seed
     - bin/rails db:examples
 
-  Note: Remember to follow the same commands when setting up your deployed database!
+You will need to repeat the above steps on deployment
 
-### Run your server!
-1. Run the API server with `bin/rails server` or `bundle exec rails server`.
+### Run server!
+1. Run `bin/rails server` or `bundle exec rails server` in your command line.
 
 ## Structure
 
@@ -223,7 +219,7 @@ HTTP/1.1 204 No Content
 ### Card
 
 | Verb  | URI Pattern         | Controller#Action |
-|-------|---------------------|-------------------|
+|-------|---------------------|---------------   -|
 | GET   | `/draw`             | `card#draw`       |
 
 #### GET /draw
