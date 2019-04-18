@@ -2,8 +2,9 @@
 
 This is the back-end API for In the cards - a simple major arcana tarot card
 reader. Please see the front end repository [here](https://github.com/TaraYoo/in-the-cards-client)
+The front end is deployed [here](https://tarayoo.github.io/in-the-cards-client/#/)
 
-## Dependencies
+## Dependencies (technologies used)
 
 Install with `bundle install`.
 
@@ -13,28 +14,30 @@ Install with `bundle install`.
 -   [`ruby`](https://www.ruby-lang.org/en/)
 -   [`postgres`](http://www.postgresql.org)
 
-## ERD
+
+## Planning
+### ERD
 ![ERD](./erd.png)
 
-## Routes
+### Routes
 
-### User Stories and related routes
-#### I want to draw three cards
+#### User Stories and related routes
+##### I want to draw three cards
 Draw three major arcana cards and assemble into a deck
 1. /draw - 'GET' three cards at random from the deck
 2. /deck - 'POST' post the deck of three cards to the user's account
   1. To 'post' to deck, user must sign in
 
-#### I want to see my previous decks
+##### I want to see my previous decks
 See deck history, click a deck to see more details
 1.  /deck - 'GET' get previous deck histories
 1.  /deck/:id - 'GET' see details in one deck history
 
-#### I want to note whether or not my reading was accurate
+##### I want to note whether or not my reading was accurate
 Update deck history to indicate reading's accuracy
 1. /deck/:id - 'PATCH' update the deck's accuracy score
 
-#### I want to delete previous readings
+##### I want to delete previous readings
 1. /deck/:id - 'DELETE' delete a particular deck
 
 
@@ -70,11 +73,9 @@ This template follows the standard project structure in Rails.
 `curl` command scripts are stored in [`curl-scripts`](curl-scripts) with names that
 correspond to API actions.
 
-User authentication is built-in.
+User authentication was built-in by Boston General Assembly.
 
 ## Tasks
-
-Developers should run these often!
 
 -   `bin/rails routes` lists the endpoints available in your API.
 -   `bin/rspec spec` runs automated tests.
@@ -83,15 +84,12 @@ Developers should run these often!
 -   `bin/rails server` starts the API.
 -   `curl-scripts/*.sh` run various `curl` commands to test the API. See below.
 
+## Future to-dos
+- Add minor arcana cards to the deck
+- Trim down unused assets and routes
+- Add AWS upload routes
+
 ## API
-
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
-
-Scripts are included in [`curl-scripts`](curl-scripts) to test built-in actions. Add your
-own scripts to test your custom API. As an alternative, you can write automated
-tests in RSpec to test your API.
 
 ### Authentication
 
@@ -101,23 +99,6 @@ tests in RSpec to test your API.
 | POST   | `/sign-in`             | `users#signin`    |
 | PATCH  | `/change-password`     | `users#changepw`  |
 | DELETE | `/sign-out`            | `users#signout`   |
-
-### Card
-
-| Verb  | URI Pattern         | Controller#Action |
-|-------|---------------------|---------------   -|
-| GET   | `/draw`             | `card#draw`       |
-
-### Deck
-
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| GET    | `/deck`                | `deck#index`      |
-| GET    | `/deck/:id`            | `deck#show`       |
-| PATCH  | `/deck/:id`            | `deck#update`     |
-| DELETE | `/deck/:id`            | `deck#destroy`    |
-| POST   | `/deck`                | `deck#create`     |
-
 
 #### POST /sign-up
 
@@ -237,6 +218,11 @@ Response:
 ```md
 HTTP/1.1 204 No Content
 ```
+### Card
+
+| Verb  | URI Pattern         | Controller#Action |
+|-------|---------------------|---------------   -|
+| GET   | `/draw`             | `card#draw`       |
 
 #### GET /draw
 
@@ -250,25 +236,195 @@ curl "http://localhost:4741/draw" \
 echo
 ```
 
-```sh
-sh curl-scripts/card/draw-cards.sh
-```
-
 Response:
 
 ```md
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
-ETag: W/"a35846c41f9e7b6e32c537073a0089be"
+ETag: W/"079897a45d6835241c5a67097971f176"
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 4e94deac-7cab-4973-9e2a-657bba0d4e02
-X-Runtime: 0.006389
+X-Request-Id: ce15bb03-a0d7-454e-b7fb-b7b7ced060e0
+X-Runtime: 0.221646
 Vary: Origin
 Transfer-Encoding: chunked
 
-{"cards":[{"id":19,"name":"Moon","mean_reverse":"Confusion, fear, misinterpretation","mean_up":"Unconscious, illusions, intuition","icon":"🌝"},{"id":15,"name":"Temperance","mean_reverse":"Extreme, Excess, imbalanced","mean_up":"Middle path, patience, finding meaning","icon":"💁"},{"id":21,"name":"Judgement","mean_reverse":"No self awareness, doubt, self loathing","mean_up":"reflection, reckoning, awakening","icon":"🌀"}]}
+{"cards":[{"id":3,"name":"High Pristess","icon":"🧙‍♀️","mean_up":"Intuition, Unconsciousness, Inner voice","mean_reverse":"Lack of center, lost iner voice, repressed feelings","up":true},{"id":18,"name":"Star","icon":"⭐","mean_up":"Hope, faith, rejuvenation","mean_reverse":"Insecurity, discouragement, faithlessness","up":true},{"id":2,"name":"Magician","icon":"🧙‍♂️","mean_up":"Willpower, Desire, Creation, Manifestation","mean_reverse":"Trickery, Illusions, Out of touch","up":true}]}
 ```
 
+### Deck
+
+| Verb   | URI Pattern            | Controller#Action |
+|--------|------------------------|-------------------|
+| GET    | `/deck`                | `deck#index`      |
+| GET    | `/deck/:id`            | `deck#show`       |
+| PATCH  | `/deck/:id`            | `deck#update`     |
+| DELETE | `/deck/:id`            | `deck#destroy`    |
+| POST   | `/deck`                | `deck#create`     |
+
+#### GET /deck
+Request:
+
+```sh
+#!/bin/bash
+
+curl "http://localhost:4741/decks" \
+  --include \
+  --request GET \
+  --header "Authorization: Token token=${TOKEN}"
+
+echo
+```
+
+Response:
+```md
+{"decks":[
+{"id":143,
+ "question":"Should I interview?",
+ "accuracy":null,
+ "formatted_cards":[
+ {"id":6,"up":false,"name":"Hierophant","mean_up":"Tradition, Conformty, Morality","mean_reverse":"Rebellion, Subversiveness, New approaches","icon":"🙏"},
+ {"id":11,"up":false,"name":"Wheel of Fortune","mean_up":"Change, cycle, inevitable fate","mean_reverse":"No control, clinging to control, bad luck","icon":"🎡"},
+ {"id":3,"up":false,"name":"High Pristess","mean_up":"Intuition, Unconsciousness, Inner voice","mean_reverse":"Lack of center, lost iner voice, repressed feelings","icon":"🧙‍♀️"}],
+ "reading_date":"2019-04-18",
+ "updated_on":"2019-04-18"}
+]}
+```
+
+#### GET /deck/:id
+Request:
+```sh
+#!/bin/bash
+
+curl "http://localhost:4741/decks/${ID}" \
+  --include \
+  --request GET \
+  --header "Authorization: Token token=${TOKEN}"
+
+echo
+```
+
+Response:
+```md
+{"deck":
+{"id":143,
+ "question":"Should I interview?",
+ "accuracy":null,
+ "formatted_cards":[
+ {"id":6,"up":false,"name":"Hierophant","mean_up":"Tradition, Conformty, Morality","mean_reverse":"Rebellion, Subversiveness, New approaches","icon":"🙏"},
+ {"id":11,"up":false,"name":"Wheel of Fortune","mean_up":"Change, cycle, inevitable fate","mean_reverse":"No control, clinging to control, bad luck","icon":"🎡"},
+ {"id":3,"up":false,"name":"High Pristess","mean_up":"Intuition, Unconsciousness, Inner voice","mean_reverse":"Lack of center, lost iner voice, repressed feelings","icon":"🧙‍♀️"}],
+ "reading_date":"2019-04-18",
+ "updated_on":"2019-04-18"}}
+```
+
+#### PATCH /deck/:id
+Request:
+```sh
+#!/bin/bash
+
+curl "http://localhost:4741/decks/${ID}" \
+  --include \
+  --request PATCH \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Token token=${TOKEN}" \
+  --data '{
+    "deck": {
+      "accuracy": "'"${ACCURACY}"'"
+    }
+  }'
+
+echo
+```
+
+Response:
+```md
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+ETag: W/"721667cf7b7f9afcac4c1d4e2cd9c0d6"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 7c4eaf65-bfe2-4477-a33c-d5801e73c40d
+X-Runtime: 0.035415
+Vary: Origin
+Transfer-Encoding: chunked
+
+{"deck":{"id":143,"question":"Should I interview?",
+
+"accuracy":"4.0",
+
+"formatted_cards":[
+{"id":6,"up":false,"name":"Hierophant","mean_up":"Tradition, Conformty, Morality","mean_reverse":"Rebellion, Subversiveness, New approaches","icon":"🙏"},
+{"id":11,"up":false,"name":"Wheel of Fortune","mean_up":"Change, cycle, inevitable fate","mean_reverse":"No control, clinging to control, bad luck","icon":"🎡"},
+{"id":3,"up":false,"name":"High Pristess","mean_up":"Intuition, Unconsciousness, Inner voice","mean_reverse":"Lack of center, lost iner voice, repressed feelings","icon":"🧙‍♀️"}],
+"reading_date":"2019-04-18",
+"updated_on":"2019-04-18"}}
+```
+
+#### POST /deck
+POST deck draws three random cards from the Card.
+Each of the three card creates a join table Reading - which connects the deck
+with three cards.
+
+Request:
+```sh
+#!/bin/bash
+
+curl "http://localhost:4741/decks/${ID}" \
+  --include \
+  --request PATCH \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Token token=${TOKEN}" \
+  --data '{
+    "deck": {
+      "accuracy": "'"${ACCURACY}"'"
+    }
+  }'
+
+echo
+```
+
+Response:
+```md
+HTTP/1.1 201 Created
+Location: http://localhost:4741/decks/146
+Content-Type: application/json; charset=utf-8
+ETag: W/"50f2f39f2c7c029628b0574a937824af"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 22ad94e7-7e41-470a-bbbe-c321a2922015
+X-Runtime: 0.037248
+Vary: Origin
+Transfer-Encoding: chunked
+
+{"deck":{"id":146,"question":"should I get a dog?","accuracy":null,
+"formatted_cards":[
+{"id":15,"up":false,"name":"Temperance","mean_up":"Middle path, patience, finding meaning","mean_reverse":"Extreme, Excess, imbalanced","icon":"💁"},
+{"id":2,"up":true,"name":"Magician","mean_up":"Willpower, Desire, Creation, Manifestation","mean_reverse":"Trickery, Illusions, Out of touch","icon":"🧙‍♂️"},
+{"id":19,"up":true,"name":"Moon","mean_up":"Unconscious, illusions, intuition","mean_reverse":"Confusion, fear, misinterpretation","icon":"🌝"}],
+"reading_date":"2019-04-18",
+"updated_on":"2019-04-18"}}
+
+```
+#### DELETE /deck/:id
+Request:
+```sh
+#!/bin/bash
+
+curl "http://localhost:4741/decks/${ID}" \
+  --include \
+  --request DELETE \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Token token=${TOKEN}"
+
+echo
+```
+
+Reponse:
+```md
+HTTP/1.1 204 No Content
+Cache-Control: no-cache
+X-Request-Id: 9c010bfc-5eaf-490b-ac4f-5aab691df708
+X-Runtime: 0.018340
+Vary: Origin
+```
 
 ### Reset Database without dropping
 
@@ -287,8 +443,3 @@ bin/rails db:migrate db:seed db:examples
 heroku run rails db:migrate VERSION=0
 heroku run rails db:migrate db:seed db:examples
 ```
-
-## Additional Resources
-- [rails-heroku-setup-guide](https://git.generalassemb.ly/ga-wdi-boston/rails-heroku-setup-guide)
-- http://guides.rubyonrails.org/api_app.html
-- https://blog.codeship.com/building-a-json-api-with-rails-5/
