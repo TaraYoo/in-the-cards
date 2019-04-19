@@ -3,6 +3,7 @@
 This is the back-end API for In the cards - a simple major arcana tarot card
 reader. Please see the front end repository [here](https://github.com/TaraYoo/in-the-cards-client)
 The front end is deployed [here](https://tarayoo.github.io/in-the-cards-client/#/)
+This API is deployed [here](https://pure-lowlands-31271.herokuapp.com/cards)
 
 ## Dependencies (technologies used)
 
