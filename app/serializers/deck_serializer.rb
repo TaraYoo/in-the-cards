@@ -17,7 +17,6 @@ class DeckSerializer < ActiveModel::Serializer
           format_object[:name] = card.name
           format_object[:mean_up] = card.mean_up
           format_object[:mean_reverse] = card.mean_reverse
-          format_object[:icon] = card.icon
         end
       end
     end
