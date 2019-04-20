@@ -16,31 +16,6 @@ class CardsController < ProtectedController
     render json: @card
   end
 
-  # POST /cards
-  def create
-    @card = current_user.cards.build(card_params)
-
-    if @card.save
-      render json: @card, status: :created, location: @card
-    else
-      render json: @card.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /cards/1
-  def update
-    if @card.update(card_params)
-      render json: @card
-    else
-      render json: @card.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /decks/1
-  def destroy
-    @card.destroy
-  end
-
   # custom GET /draw - draw three cards either up or reversed. Pass to a deck
   def draw
     @card_ids = Card.ids
