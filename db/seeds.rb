@@ -82,8 +82,8 @@ major_acrana = [
    'Fulfillment, Harmony, Completion']
 ]
 
-major_acrana.each do |name, mean_reverse, mean_up, icon|
+major_acrana.each do |name, mean_reverse, mean_up|
   Card.create(
-    name: name, mean_reverse: mean_reverse, mean_up: mean_up, icon: icon
+    name: name, mean_reverse: mean_reverse, mean_up: mean_up
   )
 end
