@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class CardsController < ApplicationController
+class CardsController < ProtectedController
+  skip_before_action :authenticate, only: %i[index show draw]
   before_action :set_card, only: %i[show update destroy]
 
   # GET /cards
@@ -17,7 +18,7 @@ class CardsController < ApplicationController
 
   # POST /cards
   def create
-    @card = Card.new(card_params)
+    @card = current_user.cards.build(card_params)
 
     if @card.save
       render json: @card, status: :created, location: @card
@@ -35,7 +36,7 @@ class CardsController < ApplicationController
     end
   end
 
-  # DELETE /cards/1
+  # DELETE /decks/1
   def destroy
     @card.destroy
   end

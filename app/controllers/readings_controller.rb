@@ -1,12 +1,11 @@
-class ReadingsController < ApplicationController
+class ReadingsController < ProtectedController
   before_action :set_reading, only: [:show, :update, :destroy]
 
   # GET /readings
   def index
-    @readings = Reading.all
+    @readings = current_user.readings
 
     render json: @readings
-  end
 
   # GET /readings/1
   def show
@@ -15,7 +14,7 @@ class ReadingsController < ApplicationController
 
   # POST /readings
   def create
-    @reading = Reading.new(reading_params)
+    @reading = current_user.readings.build(reading_params)
 
     if @reading.save
       render json: @reading, status: :created, location: @reading
@@ -33,15 +32,10 @@ class ReadingsController < ApplicationController
     end
   end
 
-  # DELETE /readings/1
-  def destroy
-    @reading.destroy
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reading
-      @reading = Reading.find(params[:id])
+      @reading = current_user.readings.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
