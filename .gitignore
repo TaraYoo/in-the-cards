@@ -117,6 +117,7 @@ pickle-email-*.html
 
 # Only include if you have production secrets in this file, which is no longer a Rails default
 # config/secrets.yml
+config/storage.yml
 
 # dotenv
 .env

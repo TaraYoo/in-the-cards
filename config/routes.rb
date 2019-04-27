@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :uploads
   resources :decks
   resources :cards, except: %i[update create destroy]
   # RESTful routes
