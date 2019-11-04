@@ -220,7 +220,7 @@ HTTP/1.1 204 No Content
 ### Card
 
 | Verb  | URI Pattern         | Controller#Action |
-|-------|---------------------|---------------   -|
+|-------|---------------------|----------------|
 | GET   | `/draw`             | `card#draw`       |
 | GET   | `/cards`            | `card#index`      |
 | GET   | `/cards/:id`        | `card#show`       |
